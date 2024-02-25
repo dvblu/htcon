@@ -1,5 +1,11 @@
-import subprocess
 import sys
+import subprocess
+
+# Color codes for formatting
+RED = '\033[0;31m'
+GREEN = '\033[0;32m'
+YELLOW = '\033[0;33m'
+NC = '\033[0m'  # No Color
 
 # Function to ping a host (either hostname or IP address)
 def ping_host(host):
@@ -11,7 +17,7 @@ def ping_host(host):
         return result.returncode == 0  # Return True if the host is reachable, False otherwise
     except Exception as e:
         # Handle any errors that may occur during ping
-        print(f"An error occurred while pinging {host}. Error: {e}")
+        print(f"{RED}An error occurred while pinging {host}. Error: {e}{NC}")
         return False
 
 if __name__ == "__main__":
@@ -39,10 +45,10 @@ if __name__ == "__main__":
     # Print overall reachability summary with color
     if not failed_pings:
         if len(hosts) == 1:
-            print(f"\033[92mHost {hosts[0]} is reachable.\033[0m")  # Green color
+            print(f"{GREEN}Host {hosts[0]} is reachable.{NC}")  # Green color
         else:
-            print("\033[92mAll hosts are reachable.\033[0m")  # Green color
+            print(f"{GREEN}All hosts are reachable.{NC}")  # Green color
     else:
-        print("\033[91mFailed to reach the following hosts:\033[0m")  # Red color
+        print(f"{RED}Failed to reach the following hosts:{NC}")  # Red color
         for host in failed_pings:
-            print(f"\033[91m{host}\033[0m")
+            print(f"{RED}{host}{NC}")
